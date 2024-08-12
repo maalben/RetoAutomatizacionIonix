@@ -38,3 +38,4 @@ gradle clean test
 
 En mi caso no lo he validado en Windows, solo en Mac, pero debería servir igual.
 
+Por último, tenga presente que para que esto le ejecute debe tener ejecutando el appium server antes que nada y un dispositivo simulador de Android Versión 12, sino es la versión, deberá modificarla en el archivo serenity.properties. Ya con estas precondiciones puede ejecutar sin ningún problema.
