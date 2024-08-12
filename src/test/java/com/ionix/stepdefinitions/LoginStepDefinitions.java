@@ -6,24 +6,22 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import ionix.exceptions.AssertionsAutomationMobilepractice;
 import ionix.models.TestData;
-import ionix.questions.ElBotonEnLaPantallaLogin;
-import ionix.questions.LaCantidadDeCamposDetectados;
-import ionix.questions.LaValidacionDeCadaCampoDeTexto;
-import ionix.questions.MensajeDeUsuarioExistente;
+import ionix.questions.*;
 import ionix.tasks.Cargar;
 import ionix.tasks.ContarLosCampos;
 import ionix.tasks.DiligenciarTodosLosDatosSinCorreo;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Managed;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 import java.util.Map;
 
-import static ionix.userinterfaces.LoginUserInterfaces.BUTTON_BACK_SCREEN;
-import static ionix.userinterfaces.LoginUserInterfaces.BUTTON_SUBMIT;
+import static ionix.userinterfaces.LoginUserInterfaces.*;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -80,10 +78,16 @@ public class LoginStepDefinitions {
         mario.attemptsTo(DiligenciarTodosLosDatosSinCorreo.enElFormularioDeRegistro());
     }
 
-    @When("^Yo regreso a la pantalla inicial$")
-    public void yoRegresoALaPantallaInicial(){
+    @When("^Yo confirmo el popup y regreso a la pantalla inicial$")
+    public void yoConfirmoElPopupYRegresoALaPantallaInicial(){
+        mario.attemptsTo(Click.on(genericTarget("TextView","Confirm", "Boton de confirmar popup")));
         mario.attemptsTo(Click.on(BUTTON_BACK_SCREEN));
         mario.attemptsTo(Click.on(BUTTON_SUBMIT));
+    }
+
+    @When("^Yo confirmo el popup$")
+    public void yoConfirmoElPopup(){
+        mario.attemptsTo(Click.on(genericTarget("TextView","Confirm", "Boton de confirmar popup")));
     }
 
     @Then("Yo deberia ver un mensaje de error de usuario existente")
@@ -91,5 +95,41 @@ public class LoginStepDefinitions {
         mario.should(seeThat(MensajeDeUsuarioExistente.es(), equalTo(TestData.getData().get("MensajeEsperado").toString()))
                 .orComplainWith(AssertionsAutomationMobilepractice.class,
                         AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_USUARIO_EXISTENTE));
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que el nombre de usuario no deberia contener arroba")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElNombreDeUsuarioNoDeberiaContenerArroba() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_USERNAME), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que el nombre de usuario no debe estar vacio")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElNombreDeUsuarioNoDebeEstarVacio() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_USERNAME), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que el password tiene formato incorrecto")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElPasswordTieneFormatoIncorrecto() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_PASSWORD), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+    }
+
+    @Then("Yo deberia ver el mensaje de bienvenida en la aplicacion")
+    public void yoDeberiaVerElMensajeDeBienvenidaEnLaAplicacion() {
+        mario.attemptsTo(WaitUntil.the(genericTarget("TextView","Welcome to ionix", "Label de creacion de registro exitoso"), WebElementStateMatchers.isPresent()).forNoMoreThan(5).seconds());
+        mario.should(seeThat(MensajeDeError.es(genericTarget("TextView","Welcome to ionix", "Label de creacion de registro exitoso")), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_NUEVO_REGISTRO_NOT_EXPECTED));
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que el repeat password tiene formato incorrecto")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElRepeatPasswordTieneFormatoIncorrecto() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_PASSWORD), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
     }
 }

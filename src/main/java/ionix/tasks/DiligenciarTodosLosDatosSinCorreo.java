@@ -14,11 +14,16 @@ public class DiligenciarTodosLosDatosSinCorreo implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-                actor.attemptsTo(Enter.theValue(TestData.getData().get("usuario").toString()).into(genericTarget("EditText","Username", "Campo de texto Username")));
-        actor.attemptsTo(Enter.theValue(TestData.getData().get("claveInicial").toString()).into(genericTarget("EditText","Password", "Campo de texto Password")));
-        actor.attemptsTo(Enter.theValue(TestData.getData().get("claveFinal").toString()).into(genericTarget("EditText","Repeat password", "Campo de texto Repeat password")));
+        if(!TestData.getData().get("usuario").toString().equals("null")){
+            actor.attemptsTo(Enter.theValue(TestData.getData().get("usuario").toString()).into(genericTarget("EditText","Username", "Campo de texto Username")));
+        }
+        if(!TestData.getData().get("claveInicial").toString().equals("null")){
+            actor.attemptsTo(Enter.theValue(TestData.getData().get("claveInicial").toString()).into(genericTarget("EditText","Password", "Campo de texto Password")));
+        }
+        if(!TestData.getData().get("claveFinal").toString().equals("null")){
+            actor.attemptsTo(Enter.theValue(TestData.getData().get("claveFinal").toString()).into(genericTarget("EditText","Repeat password", "Campo de texto Repeat password")));
+        }
         actor.attemptsTo(Click.on(BUTTON_SUBMIT));
-        actor.attemptsTo(Click.on(genericTarget("TextView","Confirm", "Boton de confirmar popup")));
     }
 
     public static DiligenciarTodosLosDatosSinCorreo enElFormularioDeRegistro(){

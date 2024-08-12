@@ -5,7 +5,7 @@ import net.serenitybdd.screenplay.targets.Target;
 
 public class LoginUserInterfaces {
 
-    static String basePathXpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]";
+    static String basePathXpath = "//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]";
 
     public static final Target EDIT_TEXTS = Target.the("Campos de tipo EditText")
             .locatedBy("//android.widget.EditText");
@@ -24,7 +24,14 @@ public class LoginUserInterfaces {
     public static final Target TEXT_LABEL_POPUP = Target.the("Texto del popup")
             .locatedBy("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView");
 
+    public static final Target TEXT_LABEL_ERROR_USERNAME = Target.the("Texto mensaje de error debajo del campo de username")
+            .locatedBy(basePathXpath+"/android.widget.TextView[2]");
 
+    public static final Target TEXT_LABEL_ERROR_PASSWORD = Target.the("Texto mensaje de error debajo del campo de password")
+            .locatedBy(basePathXpath+"/android.widget.TextView[3]");
+
+    public static final Target TEXT_LABEL_ERROR_REPEAT_PASSWORD = Target.the("Texto mensaje de error debajo del campo repeat password")
+            .locatedBy(basePathXpath+"/android.widget.TextView[4]");
 
 
 
