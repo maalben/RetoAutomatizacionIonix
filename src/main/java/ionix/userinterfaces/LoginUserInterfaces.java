@@ -13,8 +13,21 @@ public class LoginUserInterfaces {
     public static final Target BUTTON_SUBMIT = Target.the("Boton de submit")
             .located(MobileBy.xpath("//android.widget.Button/android.widget.TextView"));
 
-    public static final Target EDIT_TEXT_USERNAME = Target.the("Campo de texto Usuario")
-            .located(MobileBy.xpath( basePathXpath+"/android.widget.EditText[1]"));
+    public static Target genericTarget(String type, String nameField, String description){
+        return Target.the(description)
+                .located(MobileBy.xpath("//android.widget."+type+"[@text='"+nameField+"']"));
+    }
+
+    public static final Target BUTTON_BACK_SCREEN = Target.the("Boton para regresar a la pantalla inicial")
+            .locatedBy("//android.widget.Button");
+
+    public static final Target TEXT_LABEL_POPUP = Target.the("Texto del popup")
+            .locatedBy("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView");
+
+
+
+
+
 
 
         public static final Target TEXTFIELD_USER = Target.the("Campo de texto de usuario")

@@ -20,11 +20,12 @@ Feature: Como usuario quiero validar el login de la aplicacion
     Given Yo cargo los datos de prueba
       | usuario   | claveInicial   | claveFinal   | MensajeEsperado |
       | <usuario> | <claveInicial> | <claveFinal> | <MensajeEsperado>  |
-    When Yo diligencio el formulario de registro
-    Then I should see the title screen expected
+    When Yo diligencio el formulario de registro sin correo
+    And Yo regreso a la pantalla inicial
+    Then Yo deberia ver un mensaje de error de usuario existente
     Examples:
-      | usuario     | claveInicial | claveFinal | MensajeEsperado |
-      | testprueba1 | Ra1945++/    | Ra1945++/  | Welcome to ionix |
+      | usuario     | claveInicial | claveFinal | MensajeEsperado                      |
+      | testprueba1 | Ra1945++/    | Ra1945++/  | Nombre de usuario ya esta registrado |
 
 
 
