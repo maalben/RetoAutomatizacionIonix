@@ -5,11 +5,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import ionix.exceptions.AssertionsAutomationMobilepractice;
+import ionix.exceptions.ErrorElementNotFoundException;
 import ionix.models.TestData;
 import ionix.questions.*;
-import ionix.tasks.Cargar;
-import ionix.tasks.ContarLosCampos;
-import ionix.tasks.DiligenciarTodosLosDatosSinCorreo;
+import ionix.tasks.*;
+import ionix.userinterfaces.LoginUserInterfaces;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
@@ -87,7 +87,7 @@ public class LoginStepDefinitions {
 
     @When("^Yo confirmo el popup$")
     public void yoConfirmoElPopup(){
-        mario.attemptsTo(Click.on(genericTarget("TextView","Confirm", "Boton de confirmar popup")));
+        mario.attemptsTo(Click.on(genericTarget("TextView", "Confirm", "Boton de confirmar popup")));
     }
 
     @Then("Yo deberia ver un mensaje de error de usuario existente")
@@ -97,23 +97,30 @@ public class LoginStepDefinitions {
                         AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_USUARIO_EXISTENTE));
     }
 
+    @Then("Yo deberia ver un mensaje de error de que el nombre de usuario ya existe")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElNombreDeUsuarioYaExiste() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+    }
+
     @Then("Yo deberia ver un mensaje de error de que el nombre de usuario no deberia contener arroba")
     public void yoDeberiaVerUnMensajeDeErrorDeQueElNombreDeUsuarioNoDeberiaContenerArroba() {
-        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_USERNAME), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperado").toString()))
                 .orComplainWith(AssertionsAutomationMobilepractice.class,
                         AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
     }
 
     @Then("Yo deberia ver un mensaje de error de que el nombre de usuario no debe estar vacio")
     public void yoDeberiaVerUnMensajeDeErrorDeQueElNombreDeUsuarioNoDebeEstarVacio() {
-        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_USERNAME), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperado").toString()))
                 .orComplainWith(AssertionsAutomationMobilepractice.class,
                         AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
     }
 
     @Then("Yo deberia ver un mensaje de error de que el password tiene formato incorrecto")
     public void yoDeberiaVerUnMensajeDeErrorDeQueElPasswordTieneFormatoIncorrecto() {
-        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_PASSWORD), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+        mario.should(seeThat(MensajeDeError.es(LoginUserInterfaces.TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperado").toString()))
                 .orComplainWith(AssertionsAutomationMobilepractice.class,
                         AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
     }
@@ -128,7 +135,80 @@ public class LoginStepDefinitions {
 
     @Then("Yo deberia ver un mensaje de error de que el repeat password tiene formato incorrecto")
     public void yoDeberiaVerUnMensajeDeErrorDeQueElRepeatPasswordTieneFormatoIncorrecto() {
-        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_PASSWORD), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_REPEAT_PASSWORD), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+    }
+
+    @When("^Yo diligencio solo el nombre de usuario$")
+    public void yoDiligencioSoloElNombreDeUsuario(){
+        mario.attemptsTo(DiligenciarSoloElNombreDeUsuario.enElFormularioDeRegistro());
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que el password es requerido")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElPasswordEsRequerido() {
+        mario.should(seeThat(MensajeDeError.es(LoginUserInterfaces.TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperadoClaveInicial").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_PASSWORD_REQUERIDO));
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que el repeat password es requerido")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueElRepeatPasswordEsRequerido() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_REPEAT_PASSWORD), equalTo(TestData.getData().get("MensajeEsperadoClaveFinal").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_PASSWORD_REQUERIDO));
+    }
+
+    @When("^Yo diligencio el formulario de registro sin correo y sin repetir el password$")
+    public void yoDiligencioElFormularioDeRegistroSinCorreoYSinRepetirElPassword(){
+        mario.attemptsTo(DiligenciarTodosLosDatosSinCorreoYSinRepetirPassword.enElFormularioDeRegistro());
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que solo el repeat password es requerido")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueSoloElRepeatPasswordEsRequerido() {
+        mario.should(seeThat(MensajeDeError.es(LoginUserInterfaces.TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperadoClaveFinal").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_PASSWORD_REQUERIDO));
+    }
+
+    @When("^Yo diligencio el formulario de registro completo$")
+    public void yoDiligencioElFormularioDeRegistroCompleto(){
+        mario.attemptsTo(DiligenciarTodosLosDatos.enElFormularioDeRegistro());
+    }
+
+    @Then("Yo deberia ver un mensaje de error de ingresar un correo valido")
+    public void yoDeberiaVerUnMensajeDeErrorDeIngresarUnCorreoValido() {
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_EMAIL), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_EMAIL_ERRONEO));
+    }
+
+    @When("^Yo diligencio el formulario de registro para detectar mensaje despues de dejar el focus de un campo$")
+    public void yoDiligencioElFormularioDeRegistroParaDetectarMensajeDespuesDeDejarElFocusDeUnCampo(){
+        mario.attemptsTo(DiligenciarAlgunosCampos.enElFormularioDeRegistro());
+    }
+
+    @Then("Yo deberia ver un mensaje de error de que solo el password no tiene el formato esperado")
+    public void yoDeberiaVerUnMensajeDeErrorDeQueSoloElPasswordNoTieneElFormatoEsperado() {
+        mario.should(seeThat(MensajeDeError.es(LoginUserInterfaces.TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeEsperado").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+    }
+
+    @When("^Yo diligencio el formulario sin ingresar valores en los campos$")
+    public void yoDiligencioElFormularioSinIngresarValoresEnLosCampos(){
+        mario.attemptsTo(DiligenciarSinAgregarRegistros.enElFormularioDeRegistro());
+    }
+
+    @Then("Yo deberia ver los mensajes de error en los campos obligatorios")
+    public void yoDeberiaVerLosMensajesDeErrorEnLosCamposObligatorios() {
+        mario.should(seeThat(MensajeDeError.es(LoginUserInterfaces.TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeErrorPassword").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR_REPEAT_PASSWORD), equalTo(TestData.getData().get("MensajeErrorRepeatPassword").toString()))
+                .orComplainWith(AssertionsAutomationMobilepractice.class,
+                        AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
+        mario.should(seeThat(MensajeDeError.es(TEXT_LABEL_ERROR), equalTo(TestData.getData().get("MensajeErrorUsuario").toString()))
                 .orComplainWith(AssertionsAutomationMobilepractice.class,
                         AssertionsAutomationMobilepractice.ERROR_MENSAJE_VALIDACION_GENERAL));
     }

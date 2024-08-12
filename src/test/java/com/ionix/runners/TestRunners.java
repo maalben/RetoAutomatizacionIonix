@@ -1,3 +1,9 @@
+/**
+ * Mario Alejandro Benitez Orozco
+ *
+ * <p>Copyright (c) 2024 . All Rights Reserved.
+ *
+ */
 package com.ionix.runners;
 
 import io.cucumber.junit.CucumberOptions;
@@ -10,6 +16,6 @@ import org.junit.runner.RunWith;
 @CucumberOptions(features = "src/test/resources/features/Login.feature",
         glue = "com.ionix.stepdefinitions",
         snippets = CAMELCASE
-        )
+)
 public class TestRunners {
 }

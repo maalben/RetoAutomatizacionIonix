@@ -16,7 +16,7 @@ import net.serenitybdd.screenplay.actions.Enter;
 import static ionix.userinterfaces.LoginUserInterfaces.BUTTON_SUBMIT;
 import static ionix.userinterfaces.LoginUserInterfaces.genericTarget;
 
-public class DiligenciarTodosLosDatosSinCorreo implements Task {
+public class DiligenciarTodosLosDatos implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
@@ -29,11 +29,13 @@ public class DiligenciarTodosLosDatosSinCorreo implements Task {
         if(!TestData.getData().get("claveFinal").toString().equals("null")){
             actor.attemptsTo(Enter.theValue(TestData.getData().get("claveFinal").toString()).into(genericTarget("EditText","Repeat password", "Campo de texto Repeat password")));
         }
-
+        if(!TestData.getData().get("correo").toString().equals("null")){
+            actor.attemptsTo(Enter.theValue(TestData.getData().get("correo").toString()).into(genericTarget("EditText","Email (Optional)", "Campo de texto Email (Optional)")));
+        }
         actor.attemptsTo(Click.on(BUTTON_SUBMIT));
     }
 
-    public static DiligenciarTodosLosDatosSinCorreo enElFormularioDeRegistro(){
-        return Tasks.instrumented(DiligenciarTodosLosDatosSinCorreo.class);
+    public static DiligenciarTodosLosDatos enElFormularioDeRegistro(){
+        return Tasks.instrumented(DiligenciarTodosLosDatos.class);
     }
 }

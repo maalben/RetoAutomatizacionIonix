@@ -1,3 +1,9 @@
+/**
+ * Mario Alejandro Benitez Orozco
+ *
+ * <p>Copyright (c) 2024 . All Rights Reserved.
+ *
+ */
 package ionix.questions;
 
 import ionix.interactions.Capturar;

@@ -1,3 +1,9 @@
+/**
+ * Mario Alejandro Benitez Orozco
+ *
+ * <p>Copyright (c) 2024 . All Rights Reserved.
+ *
+ */
 package ionix.exceptions;
 
 public class AssertionsAutomationMobilepractice extends AssertionError {
@@ -10,6 +16,8 @@ public class AssertionsAutomationMobilepractice extends AssertionError {
     public static final String ERROR_MENSAJE_VALIDACION_USUARIO_EXISTENTE = "Error con la validacion de usuario existente";
     public static final String ERROR_MENSAJE_VALIDACION_GENERAL = "El mensaje de error cargado no es el esperado";
     public static final String ERROR_MENSAJE_NUEVO_REGISTRO_NOT_EXPECTED = "Mensaje de creacion de cuenta no esperado";
+    public static final String ERROR_MENSAJE_PASSWORD_REQUERIDO = "El mensaje de error de password requerido no es el esperado";
+    public static final String ERROR_MENSAJE_EMAIL_ERRONEO = "El mensaje de error de correo no valido no es el esperado";
 
     public AssertionsAutomationMobilepractice(String message, Throwable cause) {
         super(message, cause);

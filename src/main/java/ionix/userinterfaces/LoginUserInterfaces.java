@@ -1,3 +1,9 @@
+/**
+ * Mario Alejandro Benitez Orozco
+ *
+ * <p>Copyright (c) 2024 . All Rights Reserved.
+ *
+ */
 package ionix.userinterfaces;
 
 import io.appium.java_client.MobileBy;
@@ -24,26 +30,15 @@ public class LoginUserInterfaces {
     public static final Target TEXT_LABEL_POPUP = Target.the("Texto del popup")
             .locatedBy("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView");
 
-    public static final Target TEXT_LABEL_ERROR_USERNAME = Target.the("Texto mensaje de error debajo del campo de username")
-            .locatedBy(basePathXpath+"/android.widget.TextView[2]");
-
-    public static final Target TEXT_LABEL_ERROR_PASSWORD = Target.the("Texto mensaje de error debajo del campo de password")
+    public static final Target TEXT_LABEL_ERROR_REPEAT_PASSWORD = Target.the("Texto mensaje de error debajo del campo repeat password")
             .locatedBy(basePathXpath+"/android.widget.TextView[3]");
 
-    public static final Target TEXT_LABEL_ERROR_REPEAT_PASSWORD = Target.the("Texto mensaje de error debajo del campo repeat password")
-            .locatedBy(basePathXpath+"/android.widget.TextView[4]");
+    public static final Target TEXT_LABEL_ERROR = Target.the("Mensaje de error debajo de campo de texto")
+            .locatedBy(basePathXpath+"/android.widget.TextView[2]");
+
+    public static final Target TEXT_LABEL_ERROR_EMAIL = Target.the("Texto mensaje de error debajo del campo Email (Optional)")
+            .locatedBy(basePathXpath+"/android.widget.TextView[2]");
 
 
-
-
-
-        public static final Target TEXTFIELD_USER = Target.the("Campo de texto de usuario")
-            .located(MobileBy.AccessibilityId("test-Username"));
-
-    public static final Target TEXTFIELD_PASSWORD = Target.the("Campo de texto de contraseña").located(MobileBy.AccessibilityId("test-Password"));
-
-    public static final Target LABEL_PRODUCTS = Target.the("Etiqueta de titulo Productos").located(MobileBy.xpath("//android.view.ViewGroup[@content-desc=\"test-Cart drop zone\"]/android.view.ViewGroup/android.widget.TextView"));
-
-    public static final Target ALERT_MESSAGE_ERROR = Target.the("Mensaje error en alerta").located(MobileBy.xpath("//android.view.ViewGroup[@content-desc=\"test-Error message\"]/android.widget.TextView"));
 
 }
